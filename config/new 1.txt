@@ -1,0 +1,245 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+
+struct WCCB
+{
+    char* firstName;
+    char* lastName;
+    int age;
+    int numOfMatches;
+    int totalRuns;
+    int playerNumber;
+
+    struct WCCB *next;
+    struct WCCB *prev;
+    
+    
+};
+
+struct WCCB *head = NULL;
+struct WCCB *tail = NULL;
+bool isempty()
+{
+	return head==NULL;
+	
+}
+
+//Insert at beginning of node
+
+
+int numOfMatches,index, *runs, totalRuns=0,hold=0,sum=0;
+int InsertFirstPlayer( )
+{
+    struct WCCB *link = (struct WCCB*) malloc(sizeof(struct WCCB));
+    struct WCCB *ptr = head;
+    
+
+    printf(" Please Enter Player's Number: ");
+    scanf("%d",&link->playerNumber);
+    printf("\nEnter player's first name: ");
+    scanf("%s",link->firstName);
+    printf("Enter player's last name: ");
+    scanf("%s",link->lastName);
+    printf("Enter player's age: ");
+    scanf("%d",&link->age);
+    printf("Enter number of test matches: ");
+    scanf("%d",&link->numOfMatches);
+    printf("Enter number of runs: ");
+    scanf("%d",&link->totalRuns);
+    link->numOfMatches=numOfMatches;
+    runs=(int*)malloc(numOfMatches*sizeof(int));
+    
+	if (runs==NULL);
+    
+    {
+    	
+    	printf("Error");
+	}
+     printf("Please Enter Batsman Number of runs");
+     
+     for(index=0;index<numOfMatches;++index)
+     {
+     	scanf("%d",&sum);
+     	hold =hold+sum;
+	 }
+	 
+	 totalRuns=hold;
+	 printf("The Total Numbers of Runs is = %d:",totalRuns);
+	 link->totalRuns= totalRuns;
+	 
+	 free(ptr);
+    return 0;
+    scanf("%d",&link->totalRuns);
+    
+	 
+	 if(isempty())		
+		tail=link;
+		else
+
+    link->next = head;
+    head = link;
+}
+
+//Delete first player
+struct WCCB* DeleteFirstPlayer()
+{
+    struct WCCB *_link = head;
+
+    head = head->next;
+
+    printf("\n");
+    printf("Player Deleted");
+    printf("\n");
+
+    return _link;
+}
+
+//Delete any player
+struct WCCB* DeleteAnyPlayer(int playerNumber,char lastName[]){
+    struct WCCB* current = head;
+    struct WCCB* previous = NULL;
+
+    if(head == NULL)
+	{
+        return NULL;
+    }
+
+    while((current->playerNumber != playerNumber)&&(current->lastName != lastName))
+	{
+        if(current->next == NULL)
+		{
+            return NULL;
+        }
+        else{
+            previous = current;
+            current = current->next;
+        }
+    }
+
+    if(current == head){
+        head = head->next;
+    }
+    else{
+        previous->next = current->next;
+    }
+
+    printf("\n");
+    printf("Player Deleted");
+    printf("\n");
+    return current;
+}
+
+//Display all nodes
+void Display(){
+    struct WCCB *ptrDisplay = head;
+
+    while(ptrDisplay != NULL)
+	{
+		printf("%%%%%%%%%% PLAYERS PROFILE &&&&&&&&&&&&&&&&&&\n\n");
+        printf("\nPlayer's number: %d\n\n",ptrDisplay->playerNumber);
+        printf("Player's Name: %s %s\n\n",ptrDisplay->firstName,ptrDisplay->lastName);
+        printf("Player's Age: %d\n\n",ptrDisplay->age);
+        printf("Number of test matches: %d\n",ptrDisplay->numOfMatches);
+        printf("Number of runs: %d\n",ptrDisplay->totalRuns);
+        ptrDisplay = ptrDisplay->next;
+    }
+}
+
+//Search for a player
+void SearchPlayer(int playerNumber,char lastName[])
+{
+    struct WCCB *ptrSearch = head;
+
+    while(ptrSearch != NULL)
+	{
+
+        if((ptrSearch->playerNumber == playerNumber)&&(ptrSearch->lastName == lastName))
+		{
+            printf("Player Found\n");
+        }
+        else{
+               printf("Player Not Found\n");
+            }
+      if((ptrSearch->playerNumber == playerNumber)&&(ptrSearch->lastName == lastName))
+		{
+            printf("\nPlayer's number: %d\n",ptrSearch->playerNumber);
+            printf("Player's Name: %s %s\n",ptrSearch->firstName,ptrSearch->lastName);
+            printf("Player's Age: %d\n",ptrSearch->age);
+            printf("Number of test matches: %d\n",ptrSearch->numOfMatches);
+            printf("Number of runs: %d\n",ptrSearch->totalRuns);
+        }
+        
+        ptrSearch = ptrSearch->next;
+    }
+}
+
+void Menu()
+{
+	printf("PLEASE SELECT ONE OF THE FOLLOWING \n\n");
+	printf("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% MENUE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n");
+    printf("1. Add a Player\n\n");
+    printf("2. Delete first player\n\n");
+    printf("3. Delete a player\n\n");
+    printf("4. Search for a player\n\n");
+    printf("5. Display\n\n");
+    printf("6. Exit\n\n");
+}
+
+int main()
+{
+    int in,index;
+    int bull,playerNumber;
+    char* lastName;
+    in = index = 0;
+
+    while(in != 1){
+        Menu();
+        scanf("%d",&bull);
+        printf("\n");
+
+        switch(bull){
+        case 1:
+            InsertFirstPlayer();
+            printf("\n");
+        break;
+        case 2:
+            DeleteFirstPlayer();
+        break;
+        case 3:
+            printf(" Please Enter player number: ");
+            scanf("%d",&playerNumber);
+            printf(" Please Enter player's last name: ");
+            scanf("%s",lastName);
+
+            DeleteAnyPlayer(playerNumber,lastName);
+        break;
+        case 4:
+            printf(" Please Enter player number: ");
+            scanf("%d",&playerNumber);
+            printf("Please Enter player's last name: ");
+            scanf("%s",lastName);
+
+            SearchPlayer(playerNumber,lastName);
+        break;
+        case 5:
+            for(index=0;index<1;index++)
+			{
+                Display();
+            }
+        break;
+        case 6:
+            exit(0);
+        break;
+        default:
+            printf("Not an option");
+        break;
+        }
+    }
+
+    return 0;
+}
+//main.c
+//Open with
+//Displaying main.c.

@@ -27,7 +27,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'My Company',
+        'brandLabel' => 'D&D Enterprises',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -36,12 +36,15 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            
-			['label' => 'About', 'url' => ['/site/about']],
-			['label' => 'Registration', 'url' => ['/site/registration']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
-            Yii::$app->user->isGuest ?(
+            ['label' => ' View Admins', 'url' => ['/user/admin/index'], 'visible' => !Yii::$app->user->isGuest && Yii::$app->user->identity->isAdmin],
+		    
+			['label' => 'View Profile', 'url' => ['/user/profile'], 'visible' => !Yii::$app->user->isGuest],
+			['label' => 'About', 'url' => ['/site/about'], 'visible' => Yii::$app->user->isGuest],
+			['label' => 'Subscribe', 'url' => ['/users/create'], 'visible' => Yii::$app->user->isGuest],
+			['label' => 'View Subscribers', 'url' => ['/users/index'], 'visible' => !Yii::$app->user->isGuest],
+			
+            ['label' => 'Contact', 'url' => ['/site/contact'], 'visible' => !Yii::$app->user->isGuest],
+            /* Yii::$app->user->isGuest ?(
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
                 '<li>'
@@ -52,7 +55,19 @@ AppAsset::register($this);
                 )
                 . Html::endForm()
                 . '</li>'
-            )
+            ) */
+			Yii::$app->user->isGuest ?
+    ['label' => 'Sign in', 'url' => ['/user/security/login']] :
+    ['label' => 'Sign out (' . Yii::$app->user->identity->username . ')',
+        'url' => ['/user/security/logout'],
+        'linkOptions' => ['data-method' => 'post']],
+['label' => 'Admin Register', 'url' => ['/user/admin/create'], 'visible' => !Yii::$app->user->isGuest]
+			
+			
+			
+			
+			
+			
         ],
     ]);
     NavBar::end();

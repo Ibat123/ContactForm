@@ -47,9 +47,9 @@ class ContactForm extends Model
 			
             // verifyCode needs to be entered correctly
             
-        ],
+        ];					
 	}
-    }
+    
 
     /**
      * @return array customized attribute labels
@@ -71,9 +71,9 @@ class ContactForm extends Model
         if ($this->validate()) {
             Yii::$app->mailer->compose()
                 ->setTo($email)
-                ->setFrom([$this->email => $this->name])
-                ->setSubject($this->subject)
-                ->setTextBody($this->body)
+                ->setFrom([$this->email => $this->FullName])
+               // ->setSubject($this->subject)
+                //->setTextBody($this->body)
                 ->send();
 
             return true;

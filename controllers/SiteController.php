@@ -146,4 +146,8 @@ class SiteController extends Controller
 	{
 		return $this-> render('registration');
 	}
+	public function actionSuccess()
+	{
+		return $this->render('success');
+	}
 }
